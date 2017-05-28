@@ -16,21 +16,10 @@ ActiveRecord::Schema.define(version: 20170528022245) do
   enable_extension "plpgsql"
 
   create_table "ca_codes", force: :cascade do |t|
-    t.string   "code_number",        null: false
-    t.integer  "iso_description_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.string   "code_number", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.index ["code_number"], name: "index_ca_codes_on_code_number", unique: true, using: :btree
-    t.index ["iso_description_id"], name: "index_ca_codes_on_iso_description_id", using: :btree
-  end
-
-  create_table "de_codes", force: :cascade do |t|
-    t.string   "code_number",        null: false
-    t.integer  "iso_description_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-    t.index ["code_number"], name: "index_de_codes_on_code_number", unique: true, using: :btree
-    t.index ["iso_description_id"], name: "index_de_codes_on_iso_description_id", using: :btree
   end
 
   create_table "general_descriptions", force: :cascade do |t|
@@ -38,15 +27,6 @@ ActiveRecord::Schema.define(version: 20170528022245) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.index ["description"], name: "index_general_descriptions_on_description", unique: true, using: :btree
-  end
-
-  create_table "iso_cgl_codes", force: :cascade do |t|
-    t.string   "code_number",        null: false
-    t.integer  "iso_description_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-    t.index ["code_number"], name: "index_iso_cgl_codes_on_code_number", unique: true, using: :btree
-    t.index ["iso_description_id"], name: "index_iso_cgl_codes_on_iso_description_id", using: :btree
   end
 
   create_table "iso_descriptions", force: :cascade do |t|
@@ -59,103 +39,40 @@ ActiveRecord::Schema.define(version: 20170528022245) do
   create_table "mappings", force: :cascade do |t|
     t.integer  "ncci_code_id"
     t.integer  "ca_code_id"
-    t.integer  "de_code_id"
-    t.integer  "mi_code_id"
-    t.integer  "nj_code_id"
-    t.integer  "ny_code_id"
-    t.integer  "pa_code_id"
-    t.integer  "tx_code_id"
     t.integer  "naics_code_id"
     t.integer  "sic_code_id"
-    t.integer  "iso_cgl_code_id"
     t.integer  "general_description_id"
+    t.integer  "iso_description_id"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.index ["ca_code_id"], name: "index_mappings_on_ca_code_id", using: :btree
-    t.index ["de_code_id"], name: "index_mappings_on_de_code_id", using: :btree
     t.index ["general_description_id"], name: "index_mappings_on_general_description_id", using: :btree
-    t.index ["iso_cgl_code_id"], name: "index_mappings_on_iso_cgl_code_id", using: :btree
-    t.index ["mi_code_id"], name: "index_mappings_on_mi_code_id", using: :btree
+    t.index ["iso_description_id"], name: "index_mappings_on_iso_description_id", using: :btree
     t.index ["naics_code_id"], name: "index_mappings_on_naics_code_id", using: :btree
-    t.index ["ncci_code_id", "ca_code_id", "de_code_id", "mi_code_id", "nj_code_id", "ny_code_id", "pa_code_id", "tx_code_id", "naics_code_id", "sic_code_id", "iso_cgl_code_id", "general_description_id"], name: "by_gen_description_codes", unique: true, using: :btree
+    t.index ["ncci_code_id", "ca_code_id", "naics_code_id", "sic_code_id", "general_description_id", "iso_description_id"], name: "by_descriptions_codes", unique: true, using: :btree
     t.index ["ncci_code_id"], name: "index_mappings_on_ncci_code_id", using: :btree
-    t.index ["nj_code_id"], name: "index_mappings_on_nj_code_id", using: :btree
-    t.index ["ny_code_id"], name: "index_mappings_on_ny_code_id", using: :btree
-    t.index ["pa_code_id"], name: "index_mappings_on_pa_code_id", using: :btree
     t.index ["sic_code_id"], name: "index_mappings_on_sic_code_id", using: :btree
-    t.index ["tx_code_id"], name: "index_mappings_on_tx_code_id", using: :btree
-  end
-
-  create_table "mi_codes", force: :cascade do |t|
-    t.string   "code_number",        null: false
-    t.integer  "iso_description_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-    t.index ["code_number"], name: "index_mi_codes_on_code_number", unique: true, using: :btree
-    t.index ["iso_description_id"], name: "index_mi_codes_on_iso_description_id", using: :btree
   end
 
   create_table "naics_codes", force: :cascade do |t|
-    t.string   "code_number",        null: false
-    t.integer  "iso_description_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.string   "code_number", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.index ["code_number"], name: "index_naics_codes_on_code_number", unique: true, using: :btree
-    t.index ["iso_description_id"], name: "index_naics_codes_on_iso_description_id", using: :btree
   end
 
   create_table "ncci_codes", force: :cascade do |t|
-    t.string   "code_number",        null: false
-    t.integer  "iso_description_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.string   "code_number", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.index ["code_number"], name: "index_ncci_codes_on_code_number", unique: true, using: :btree
-    t.index ["iso_description_id"], name: "index_ncci_codes_on_iso_description_id", using: :btree
-  end
-
-  create_table "nj_codes", force: :cascade do |t|
-    t.string   "code_number",        null: false
-    t.integer  "iso_description_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-    t.index ["code_number"], name: "index_nj_codes_on_code_number", unique: true, using: :btree
-    t.index ["iso_description_id"], name: "index_nj_codes_on_iso_description_id", using: :btree
-  end
-
-  create_table "ny_codes", force: :cascade do |t|
-    t.string   "code_number",        null: false
-    t.integer  "iso_description_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-    t.index ["code_number"], name: "index_ny_codes_on_code_number", unique: true, using: :btree
-    t.index ["iso_description_id"], name: "index_ny_codes_on_iso_description_id", using: :btree
-  end
-
-  create_table "pa_codes", force: :cascade do |t|
-    t.string   "code_number",        null: false
-    t.integer  "iso_description_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-    t.index ["code_number"], name: "index_pa_codes_on_code_number", unique: true, using: :btree
-    t.index ["iso_description_id"], name: "index_pa_codes_on_iso_description_id", using: :btree
   end
 
   create_table "sic_codes", force: :cascade do |t|
-    t.string   "code_number",        null: false
-    t.integer  "iso_description_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.string   "code_number", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.index ["code_number"], name: "index_sic_codes_on_code_number", unique: true, using: :btree
-    t.index ["iso_description_id"], name: "index_sic_codes_on_iso_description_id", using: :btree
-  end
-
-  create_table "tx_codes", force: :cascade do |t|
-    t.string   "code_number",        null: false
-    t.integer  "iso_description_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-    t.index ["code_number"], name: "index_tx_codes_on_code_number", unique: true, using: :btree
-    t.index ["iso_description_id"], name: "index_tx_codes_on_iso_description_id", using: :btree
   end
 
 end
