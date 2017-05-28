@@ -9,7 +9,7 @@
 #
 
 class GeneralDescription < ApplicationRecord
-  has_one :mapping
+  has_one :mapping, dependent: :destroy
   has_one :ca_code, through: :mapping
   has_one :de_code, through: :mapping
   has_one :mi_code, through: :mapping
