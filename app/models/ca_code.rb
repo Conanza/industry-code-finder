@@ -10,7 +10,6 @@
 #
 
 class CaCode < ApplicationRecord
-  belongs_to :iso_description
   has_many :mappings, dependent: :nullify
   has_many :general_descriptions, through: :mappings
 end

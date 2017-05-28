@@ -9,4 +9,9 @@
 #
 
 class IsoDescription < ApplicationRecord
+  has_many :mappings
+  has_many :ca_codes, through: :mappings
+  has_many :ncci_codes, through: :mappings
+  has_many :naics_codes, through: :mappings
+  has_many :sic_codes, through: :mappings
 end
