@@ -1,0 +1,2 @@
+class SicCode < ApplicationRecord
+end

@@ -1,0 +1,2 @@
+class IsoDescription < ApplicationRecord
+end

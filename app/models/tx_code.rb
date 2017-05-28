@@ -1,0 +1,2 @@
+class TxCode < ApplicationRecord
+end

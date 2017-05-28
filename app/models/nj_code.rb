@@ -1,0 +1,2 @@
+class NjCode < ApplicationRecord
+end

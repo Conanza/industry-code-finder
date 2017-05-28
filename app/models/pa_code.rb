@@ -1,0 +1,2 @@
+class PaCode < ApplicationRecord
+end

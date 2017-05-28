@@ -1,0 +1,2 @@
+class CaCode < ApplicationRecord
+end

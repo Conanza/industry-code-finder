@@ -1,0 +1,2 @@
+class MiCode < ApplicationRecord
+end

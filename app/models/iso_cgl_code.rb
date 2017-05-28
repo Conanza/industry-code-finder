@@ -1,0 +1,2 @@
+class IsoCglCode < ApplicationRecord
+end
