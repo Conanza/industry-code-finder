@@ -2,18 +2,25 @@ require 'csv'
 DEBUG_MODE = true
 
 # Classification Systems (interested in NCCI, NAICS, and CA)
+CA    = 'CA WC'.freeze
+DE    = 'DE WC'.freeze
+ISO   = 'ISO CGL'.freeze
+MI    = 'MI WC'.freeze
 NAICS = 'NAICS'.freeze
 NCCI  = 'NCCI'.freeze
+NJ    = 'NJ WC'.freeze
+NY    = 'NY WC'.freeze
+PA    = 'PA WC'.freeze
 SIC   = 'SIC'.freeze
-WCIRB = 'CA WC'.freeze
+TX    = 'TX WC'.freeze
 
-SYSTEMS = [NAICS, NCCI, SIC, WCIRB].freeze
+systems = [CA, DE, ISO, MI, NAICS, NCCI, NJ, NY, PA, SIC, TX]
 
 # Description Types
 ISO_D = 'ISO Description'.freeze
 GEN_D = 'General Description'.freeze
 
-DESCRIPTIONS = [ISO_D, GEN_D].freeze
+description_types = [ISO_D, GEN_D]
 
 # Matchers
 NA_REGEX  = /N\/A/
@@ -28,9 +35,10 @@ CSV.foreach('./fastcompclasscodecrossreferenceguide.csv',
             row_sep: "\n",
             skip_lines: /\AFastComp\.com/,
             skip_blanks: true) do |row|
-  p row if row[ISO_D] && row[ISO_D].match('Alarms and Alarm Systems')
-
+  # p row if row[ISO_D] && row[ISO_D].match('Alarms and Alarm Systems')
   # p row if row[WCIRB] && row[WCIRB].match(VAR_REGEX)
+
+  p row if row['ISO CGL'] && row['ISO CGL'].match(NA_REGEX)
 
   header_lines += 1 if row[ISO_D] == ISO_D
   lines += 1
@@ -46,6 +54,8 @@ end
 if DEBUG_MODE
   puts "number of lines read: #{lines}"
   puts "number of header lines read: #{header_lines}"
+  p systems
+  p description_types
 end
 
 # NOTE
