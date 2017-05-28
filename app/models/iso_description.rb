@@ -14,4 +14,5 @@ class IsoDescription < ApplicationRecord
   has_many :ncci_codes, through: :mappings
   has_many :naics_codes, through: :mappings
   has_many :sic_codes, through: :mappings
+  has_many :general_descriptions, through: :mappings
 end

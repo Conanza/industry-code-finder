@@ -14,4 +14,5 @@ class GeneralDescription < ApplicationRecord
   has_one :ncci_code, through: :mapping
   has_one :naics_code, through: :mapping
   has_one :sic_code, through: :mapping
+  has_one :iso_description, through: :mapping
 end
