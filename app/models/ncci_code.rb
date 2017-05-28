@@ -10,4 +10,8 @@
 
 class NcciCode < ApplicationRecord
   include Describable
+
+  def self.to_label
+    'NCCI'
+  end
 end

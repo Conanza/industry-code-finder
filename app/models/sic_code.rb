@@ -10,4 +10,8 @@
 
 class SicCode < ApplicationRecord
   include Describable
+
+  def self.to_label
+    'SIC'
+  end
 end

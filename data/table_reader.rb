@@ -3,18 +3,11 @@ DEBUG_MODE = true
 
 # Classification Systems (interested in NCCI, NAICS, and CA)
 CA    = 'CA WC'.freeze
-DE    = 'DE WC'.freeze
-ISO   = 'ISO CGL'.freeze
-MI    = 'MI WC'.freeze
 NAICS = 'NAICS'.freeze
 NCCI  = 'NCCI'.freeze
-NJ    = 'NJ WC'.freeze
-NY    = 'NY WC'.freeze
-PA    = 'PA WC'.freeze
 SIC   = 'SIC'.freeze
-TX    = 'TX WC'.freeze
 
-systems = [CA, DE, ISO, MI, NAICS, NCCI, NJ, NY, PA, SIC, TX]
+systems = [CA, NAICS, NCCI, SIC]
 
 # Description Types
 ISO_D = 'ISO Description'.freeze

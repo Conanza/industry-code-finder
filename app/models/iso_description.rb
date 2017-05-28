@@ -15,4 +15,8 @@ class IsoDescription < ApplicationRecord
   has_many :naics_codes, through: :mappings
   has_many :sic_codes, through: :mappings
   has_many :general_descriptions, through: :mappings
+
+  def self.to_label
+    'ISO Description'
+  end
 end

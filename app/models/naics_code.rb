@@ -10,4 +10,8 @@
 
 class NaicsCode < ApplicationRecord
   include Describable
+
+  def self.to_label
+    'NAICS'
+  end
 end

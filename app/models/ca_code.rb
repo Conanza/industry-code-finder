@@ -10,4 +10,8 @@
 
 class CaCode < ApplicationRecord
   include Describable
+
+  def self.to_label
+    'CA WC'
+  end
 end

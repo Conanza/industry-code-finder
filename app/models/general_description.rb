@@ -15,4 +15,8 @@ class GeneralDescription < ApplicationRecord
   has_one :naics_code, through: :mapping
   has_one :sic_code, through: :mapping
   has_one :iso_description, through: :mapping
+
+  def self.to_label
+    'General Description'
+  end
 end
