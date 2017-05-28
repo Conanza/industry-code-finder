@@ -20,4 +20,16 @@
 #
 
 class Mapping < ApplicationRecord
+  belongs_to :ca_code, optional: true
+  belongs_to :de_code, optional: true
+  belongs_to :mi_code, optional: true
+  belongs_to :nj_code, optional: true
+  belongs_to :ny_code, optional: true
+  belongs_to :pa_code, optional: true
+  belongs_to :tx_code, optional: true
+  belongs_to :ncci_code, optional: true
+  belongs_to :naics_code, optional: true
+  belongs_to :sic_code, optional: true
+  belongs_to :iso_cgl_code, optional: true
+  belongs_to :general_description, optional: true
 end
