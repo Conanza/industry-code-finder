@@ -1,11 +1,9 @@
 class QueriesController < ApplicationController
   def test
-    render json: {
-      data: "testing testes 1 2 balls"
-    }
+    render json: { msg: "testing testes 1 2 balls" }
   end
 
   def test2
-    render json: { data: 'second test'}
+    render json: { msg: 'second test'}
   end
 end
