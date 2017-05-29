@@ -148,7 +148,7 @@ class TableReader
       id = if code_number == 'N/A' || code_number.nil?
              nil
            else
-             sys.find_or_create_by(code_number: code_number).id
+             sys.find_or_create_by!(code_number: code_number).id
            end
       instance_variable_set(var_name, id)
     end
@@ -159,12 +159,12 @@ class TableReader
       id = if description.nil?
              nil
            else
-             desc.find_or_create_by(description: description).id
+             desc.find_or_create_by!(description: description).id
            end
       instance_variable_set(var_name, id)
     end
 
-    Mapping.create(
+    Mapping.create!(
       ca_code_id: @ca_code_id,
       ncci_code_id: @ncci_code_id,
       naics_code_id: @naics_code_id,
