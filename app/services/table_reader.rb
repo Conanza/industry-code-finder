@@ -8,7 +8,7 @@ class TableReader
   ISO_D = IsoDescription.to_label
   GEN_D = GeneralDescription.to_label
 
-  def initialize(params = {})
+  def initialize
     @descriptions = [IsoDescription, GeneralDescription]
     @systems = [CaCode, NaicsCode, NcciCode, SicCode]
 
@@ -19,12 +19,14 @@ class TableReader
     @header_lines = 0
     @non_header_lines = 0
     @total_lines = 0
+    @errors = 0
   end
 
   def output_performance_stats
     puts "number of header lines read: #{@header_lines} (of 83 expected)"
     puts "number of regular lines read: #{@non_header_lines} (of 2768 expected)"
     puts "total lines read: #{@total_lines} (of 2851 expected)"
+    puts "total errors in seeding db: #{@errors} errors"
   end
 
   def parse_csv(path_to_csv)
@@ -83,7 +85,13 @@ class TableReader
     end
 
     completed_rows.each do |row|
-      clean_up(row).each { |clean_row| create_mapping(clean_row) }
+      clean_up(row).each do |clean_row|
+        begin
+          create_mapping(clean_row)
+        rescue # TODO should only catch ActiveRecord errors
+          @errors += 1
+        end
+      end
     end
   end
 
@@ -107,7 +115,6 @@ class TableReader
 
     if multilined
       # create max_lines # of rows
-      # headers = [ISO_D, SIC, NAICS, GEN_D, NCCI, CA]
       max_lines.times do |i|
         fields = []
         @all_headers.each do |hdr|
@@ -134,7 +141,37 @@ class TableReader
   end
 
   def create_mapping(row)
-    p row
+    @systems.each do |sys|
+      var_name = "@#{sys.name.underscore}_id"
+      code_number = row[sys.to_label]
+
+      id = if code_number == 'N/A' || code_number.nil?
+             nil
+           else
+             sys.find_or_create_by(code_number: code_number).id
+           end
+      instance_variable_set(var_name, id)
+    end
+
+    @descriptions.each do |desc|
+      var_name = "@#{desc.name.underscore}_id"
+      description = row[desc.to_label]
+      id = if description.nil?
+             nil
+           else
+             desc.find_or_create_by(description: description).id
+           end
+      instance_variable_set(var_name, id)
+    end
+
+    Mapping.create(
+      ca_code_id: @ca_code_id,
+      ncci_code_id: @ncci_code_id,
+      naics_code_id: @naics_code_id,
+      sic_code_id: @sic_code_id,
+      general_description_id: @general_description_id,
+      iso_description_id: @iso_description_id
+    )
   end
 
   def description_only_row?(row)
