@@ -20,18 +20,43 @@ def clean_up(row)
   rows = []
   row[ISO_D].gsub!("\n", " ")
 
-  num_lines = 1
-  multilines = [CA, NAICS, NCCI, SIC, GEN_D].any? do |label|
-    if row[label].nil?
-      false
-    else
-      row[label].split("\n").length > 1
+  max_lines = 1
+  multilined = false
+  [CA, NAICS, NCCI, SIC].each do |label|
+    next if row[label].nil?
+    num_lines = row[label].split("\n").length
+
+    if num_lines > 1
+      multilined = true
+      max_lines = num_lines > max_lines ? num_lines : max_lines
     end
   end
 
-  if multilines
+  if multilined
+    # create max_lines # of rows
+    headers = [ISO_D, SIC, NAICS, GEN_D, NCCI, CA]
+
+    max_lines.times do |i|
+      fields = []
+      headers.each do |hdr|
+        lines = row[hdr].split("\n") if row[hdr]
+        if lines && lines.length > 1
+          if hdr == GEN_D && lines.length > max_lines && i == max_lines - 1
+            fields.push(lines[i..-1].join(' '))
+          else
+            fields.push(lines[i])
+          end
+        else
+          fields.push(row[hdr])
+        end
+      end
+
+      rows.push(CSV::Row.new(headers, fields))
+    end
+
     rows
   else
+    row[GEN_D].gsub!("\n", " ")
     row
   end
 end
