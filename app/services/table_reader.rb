@@ -84,7 +84,8 @@ class TableReader
       prev_row = row
     end
 
-    completed_rows.each do |row|
+    completed_rows.each_with_index do |row, i|
+      print ["\\\r", "|\r", "/\r", "-\r"][i % 4]
       clean_up(row).each do |clean_row|
         begin
           create_mapping(clean_row)
