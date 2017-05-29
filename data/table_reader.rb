@@ -16,6 +16,26 @@ NA_REGEX  = /N\/A/
 VAR_REGEX = /Var\./
 
 # Helpers
+def clean_up(row)
+  rows = []
+  row[ISO_D].gsub!("\n", " ")
+
+  num_lines = 1
+  multilines = [CA, NAICS, NCCI, SIC, GEN_D].any? do |label|
+    if row[label].nil?
+      false
+    else
+      row[label].split("\n").length > 1
+    end
+  end
+
+  if multilines
+    rows
+  else
+    row
+  end
+end
+
 def space(str)
   str[-1] == '-' ? '' : ' '
 end
@@ -63,8 +83,6 @@ CSV.open('./writer_test.csv', 'wb') do |csv|
         completed_rows << row
       end
     else
-      row[ISO_D].gsub!("\n", " ")
-
       if deferred_rows.empty?
         row_with_iso = nil
       else
@@ -81,16 +99,15 @@ CSV.open('./writer_test.csv', 'wb') do |csv|
     end
 
     prev_row = row
-    # cases to account for
-    # 1. when a description contains a newline
-    #    a. it's either run long
-    #    b. or there are multiple descriptions mapping to different codes (should have matching newlines in codes)
-    # 2. when a description runs long and occupies a new row by itself
-    # 3. when an ISO Description maps to many other codes/descriptions and has white space on top and bottom
   end
 
   completed_rows.each do |row|
-    csv << row
+    maybe_rows = clean_up(row)
+    if maybe_rows.is_a?(Array)
+      maybe_rows.each { |r| csv << r }
+    elsif maybe_rows.is_a?(CSV::Row)
+      csv << row
+    end
   end
 end
 
@@ -104,3 +121,10 @@ end
 # ISO and General Descriptions are never N/A
 # some classification systems contain Var.
 # some classification systems contain N/A
+
+# cases to account for
+# 1. when a description contains a newline
+#    a. it's either run long
+#    b. or there are multiple descriptions mapping to different codes (should have matching newlines in codes)
+# 2. when a description runs long and occupies a new row by itself
+# 3. when an ISO Description maps to many other codes/descriptions and has white space on top and bottom
