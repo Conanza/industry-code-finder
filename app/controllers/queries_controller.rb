@@ -1,4 +1,7 @@
 class QueriesController < ApplicationController
+  def new
+  end
+
   def lookup
     @query = query_params
     class_system = @query[:class_system].downcase

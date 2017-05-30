@@ -1,0 +1,26 @@
+<form action="<%= queries_url %>" method="POST">
+  <label for="class-system">Select Classification System</label>
+  <select id="class-system" name="query[class_system]" required>
+    <% ['CA', 'NCCI', 'NAICS', 'SIC'].each do |sys| %>
+      <option
+        value="<%= sys %>"
+        <%= "selected" if sys == "CA" %>>
+        <%= sys %>
+      </option>
+    <% end %>
+  </select>
+
+  <br>
+
+  <label for="code-number">Enter Code Number</label>
+  <input
+    required
+    id="code-number"
+    type="text"
+    placeholder="eg. 1234"
+    name="query[code_number]">
+
+  <br>
+
+  <button type="submit">Search</button>
+</form>
