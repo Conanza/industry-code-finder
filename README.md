@@ -2,7 +2,7 @@
 A microservice for looking up industry codes
 
 ## How to Use
-Interfacing with the lookup microservice is achieved with a REST API and served through agile-river-44674.herokuapp.com. The API currently only supports lookup by a single class code, defined by a code number and its classification system, and is designed to respond with a JSON object containing cross-referenced industry codes, along with their respective descriptions.
+Interfacing with the lookup microservice is achieved with a REST API and served through industry-code-finder.herokuapp.com. The API currently only supports lookup by a single class code, defined by a code number and its classification system, and is designed to respond with a JSON object containing cross-referenced industry codes, along with their respective descriptions.
 
 ### API Examples
 
@@ -10,14 +10,14 @@ Class code lookup is done via POST requests to `/lookup`
 
 1. Requesting a lookup from the terminal
 ```
-  curl -X POST -H "Content-Type: application/json" -d '{"query": {"class_system": "CA", "code_number": "1741"} }' agile-river-44674.herokuapp.com/lookup
+  curl -X POST -H "Content-Type: application/json" -d '{"query": {"class_system": "CA", "code_number": "1741"} }' industry-code-finder.herokuapp.com/lookup
 ```
 
 2. Client-side lookup (jQuery)
 ```javascript
   $.ajax({
      method: "POST",
-     url: "http://agile-river-44674.herokuapp.com/lookup",
+     url: "http://industry-code-finder.herokuapp.com/lookup",
      data: {
        query: {
          class_system: "CA",
