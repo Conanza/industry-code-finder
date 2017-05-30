@@ -9,6 +9,11 @@ class QueriesController < ApplicationController
     @code = code_class.find_by(code_number: @query[:code_number])
 
     response.headers['Access-Control-Allow-Origin'] = '*'
+
+    respond_to do |format|
+      format.html
+      format.json
+    end
   end
 
   private

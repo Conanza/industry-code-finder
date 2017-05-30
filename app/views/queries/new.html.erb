@@ -1,4 +1,4 @@
-<form action="<%= queries_url %>" method="POST">
+<form action="<%= lookup_url %>" method="POST">
   <label for="class-system">Select Classification System</label>
   <select id="class-system" name="query[class_system]" required>
     <% ['CA', 'NCCI', 'NAICS', 'SIC'].each do |sys| %>
